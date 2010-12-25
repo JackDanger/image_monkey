@@ -16,24 +16,24 @@ module ImageMonkey
       @_path ||= "tmp/#{rand(100000000)}"
     end
 
-    # Options: :width, :height, :path
+    # Options: :size :path
     def initialize options={}
       file = open(SOURCE_HOST + options[:path])
-      size = "#{options[:width]}x#{options[:height]}"
 
       FileUtils.mkdir_p("tmp")
       @img = Magick::Image.from_blob(file.read).first
-      @img.change_geometry(size) { |cols, rows, image| image.crop_resized!(cols, rows) }
-      @img.write(thumbnail_path)
+      @img.change_geometry(options[:size]) { |cols, rows, image| image.crop_resized!(cols, rows) }
+      @img = @img.sharpen(0.5, 0.5)
+      @img.write(thumbnail_path) { self.quality = 70 }
       Smusher.optimize_image(thumbnail_path)
     end
   end
 
 end
 
-get '/*/*/*' do
-  width, height, path = params[:splat]
-  image = ImageMonkey::Image.new(:width => width, :height => height, :path => path)
+get '/*/*' do
+  size, path = params[:splat]
+  image = ImageMonkey::Image.new(:size => size,:path => path)
   expires      315360000, :public
   send_file    image.thumbnail_path, :type => image.content_type
 end
