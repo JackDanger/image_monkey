@@ -1,6 +1,6 @@
 ImageMonkey is a Sinatra service that takes care of all your thumbnailing needs on the fly.
 
-If ImageMonkey is setup to listen at *http://static.tanga.com*, to fetch original images from *http://www.tanga.com*, and a request comes in to *http://static.tanga.com/300200!/images/logo.jpg*, ImageMonkey will:
+If ImageMonkey is setup to listen at *http://static.tanga.com*, to fetch original images from *http://www.tanga.com*, and a request comes in to *http://static.tanga.com/300x200!/images/logo.jpg*, ImageMonkey will:
  * Fetch http://www.tanga.com/images/logo.jpg (if it hasn't already)
  * Resize the image using ImageMagick to 300x200!
  * Smush the image using "http://www.smushit.com/ysmush.it":http://www.smushit.com/ysmush.it.  This will reduce filesizes significantly.
