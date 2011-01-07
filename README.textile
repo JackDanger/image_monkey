@@ -3,16 +3,19 @@ ImageMonkey is a Sinatra service that takes care of all your thumbnailing needs 
 If ImageMonkey is setup to listen at *http://static.tanga.com*, to fetch original images from *http://www.tanga.com*, and a request comes in to *http://static.tanga.com/300200!/images/logo.jpg*, ImageMonkey will:
  * Fetch http://www.tanga.com/images/logo.jpg (if it hasn't already)
  * Resize the image using ImageMagick to 300x200!
- * Smush the image using some tool like "http://www.smushit.com/ysmush.it":http://www.smushit.com/ysmush.it
- * Return the thumbnail to the client
- * Cache the thumbnail for future requests
+ * Smush the image using "http://www.smushit.com/ysmush.it":http://www.smushit.com/ysmush.it.  This will reduce filesizes significantly.
+ * Return the thumbnail to the client with appropriate http headers.
 
 If you use SSL on your main site, you'll probably want to setup ImageMonkey to use SSL as well.
 
 That's pretty much it.  This system allows you to easily make changes to your thumbnail sizes, squashing algorithms, etc without modifying application code.
 
-Random Thoughts:
- * If two requests come in at the same time for the same thumbnail that we haven't yet generated or fetched the original, we want to do the fetch/generation once, then serve the thumbnail to both clients. This should work across multiple machines.
- * Be able to support multiple machines -- some sort of file sharing probably needed?
- * Be efficient -- don't block.  
- * Possibly support URL signing to prevent hotlinking or unauthorized resizing
+You will want to use a http caching server (Varnish or Cloudfront (or both)) in front of this.  Hosting on heroku w/ a Cloudfront custom origin is a fantastic idea.
+
+*Stuff left to do*
+ * Change the URL to something like /resizer/200x300/rest/of/url.
+ * If a request comes in that doesn't match /resizer, download/proxy the requested file (don't try to thumbnail it)..
+ * Clean up the code a bit, add tests.
+ * Add a config.rb for easy configuration.
+ * Add a rails helper that you can use to easily integrate this into your Rails application.
+ * Update to Sinatra 1.12.
