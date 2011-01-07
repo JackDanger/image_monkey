@@ -5,7 +5,7 @@ require 'ftools'
 require 'smusher'
 
 module ImageMonkey
-  SOURCE_HOST = "http://secure.tanga.com/"
+  SOURCE_HOST = "http://test.tanga.com/"
 
   class Image
     def content_type
