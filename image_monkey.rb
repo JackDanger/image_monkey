@@ -4,8 +4,9 @@ require 'RMagick'
 require 'ftools'
 require 'smusher'
 
+SOURCE_HOST = "http://test.tanga.com/"
+
 module ImageMonkey
-  SOURCE_HOST = "http://test.tanga.com/"
 
   class Image
     def content_type
@@ -18,7 +19,11 @@ module ImageMonkey
 
     # Options: :size :path
     def initialize options={}
-      file = open(SOURCE_HOST + options[:path])
+      begin
+        file = open(SOURCE_HOST + options[:path])
+      rescue OpenURI::HTTPError => e
+        raise Sinatra::NotFound.new("couldn't find it")
+      end
 
       FileUtils.mkdir_p("tmp")
       @img = Magick::Image.from_blob(file.read).first
@@ -31,9 +36,24 @@ module ImageMonkey
 
 end
 
-get '/*/*' do
-  size, path = params[:splat]
-  image = ImageMonkey::Image.new(:size => size,:path => path)
+
+get '/resizer/*/*' do |size, path|
+  image = ImageMonkey::Image.new(:size => size, :path => path)
   expires      315360000, :public
   send_file    image.thumbnail_path, :type => image.content_type
+end
+
+get '*' do |path|
+  begin
+    file = open(SOURCE_HOST + path)
+    puts file.path
+    expires   315360000, :public
+    send_file file.path,
+              :filename => File.basename(path),
+              :disposition => 'inline',
+              :type => File.extname(path)
+  rescue OpenURI::HTTPError => e
+    raise Sinatra::NotFound.new("couldn't find it")
+  end
+
 end
