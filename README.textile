@@ -1,12 +1,12 @@
-ImageMonkey is a Sinatra service that takes care of all your thumbnailing needs on the fly.
+Are you tired of handling weird image resizing stuff in your application?  Does generating images take a long time?  Is it a pain to come up with different sizes of thumbnails?  Do you wish you could reduce your image sizes by 20-50%?  Would it be nice to have a single solution that handles all your imaging needs for all of your projects no matter what language / platform they are on?
+
+ImageMonkey will handle this for you.  In something like 20 lines of Ruby code.  
 
 If ImageMonkey is setup to listen at *http://static.tanga.com*, to fetch original images from *http://www.tanga.com*, and a request comes in to *http://static.tanga.com/300x200!/images/logo.jpg*, ImageMonkey will:
  * Fetch http://www.tanga.com/images/logo.jpg (if it hasn't already)
  * Resize the image using ImageMagick to 300x200!
  * Smush the image using "http://www.smushit.com/ysmush.it":http://www.smushit.com/ysmush.it.  This will reduce filesizes significantly.
  * Return the thumbnail to the client with appropriate http headers.
-
-If you use SSL on your main site, you'll probably want to setup ImageMonkey to use SSL as well.
 
 That's pretty much it.  This system allows you to easily make changes to your thumbnail sizes, squashing algorithms, etc without modifying application code.
 
