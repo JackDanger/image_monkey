@@ -1,4 +1,4 @@
-ImageMonkey is a Rails 3 service that takes care of all your thumbnailing needs on the fly.
+ImageMonkey is a Sinatra service that takes care of all your thumbnailing needs on the fly.
 
 If ImageMonkey is setup to listen at *http://static.tanga.com*, to fetch original images from *http://www.tanga.com*, and a request comes in to *http://static.tanga.com/300/200!/images/logo.jpg*, ImageMonkey will:
  * Fetch http://www.tanga.com/images/logo.jpg (if it hasn't already)
