@@ -1,6 +1,5 @@
 require 'open-uri'
 require 'RMagick'
-require 'ftools'
 require 'smusher'
 
 module ImageMonkey
