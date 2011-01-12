@@ -23,7 +23,8 @@ module ImageMonkey
       @img = @img.sharpen(0.5, 0.5)
       @img.write(thumbnail_path) { self.quality = 70 }
       Smusher.optimize_image(thumbnail_path)
-    rescue Errno::ENOENT
+
+    rescue Errno::ENOENT, OpenURI::HTTPError
       @missing = true
     end
   end
