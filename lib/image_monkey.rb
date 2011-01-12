@@ -1,9 +1,3 @@
-require 'sinatra'
-require 'open-uri'
-require 'RMagick'
-require 'ftools'
-require 'smusher'
-
 module ImageMonkey
   SOURCE_HOST = "http://test.tanga.com/"
 
@@ -36,15 +30,3 @@ module ImageMonkey
 
 end
 
-get '/:geometry/:path' do
-
-  pass unless params[:geometry] =~ /^\d+x\d+[!%<>]$/
-
-  image = ImageMonkey::Image.new(:size => params[:geometry],
-                                 :path => params[:path])
-
-  pass if image.missing?
-
-  expires      315360000, :public
-  send_file    image.thumbnail_path, :type => image.content_type
-end

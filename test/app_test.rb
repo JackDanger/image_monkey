@@ -3,7 +3,7 @@ ENV['RACK_ENV'] = 'test'
 require 'test/unit'
 require 'shoulda'
 require 'rack/test'
-require 'image_monkey'
+require 'app'
 
 # Modify the ImageMonkey::Image class to overwrite the Kernel#open method
 module ImageMonkey
