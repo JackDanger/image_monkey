@@ -16,4 +16,3 @@ You will want to use a http caching server (Varnish or Cloudfront (or both)) in 
  * Change the URL to something like /resizer/200x300/rest/of/url.
  * If a request comes in that doesn't match /resizer, download/proxy the requested file (don't try to thumbnail it)..
  * Add a rails helper that you can use to easily integrate this into your Rails application.
- * Update to Sinatra 1.12.
