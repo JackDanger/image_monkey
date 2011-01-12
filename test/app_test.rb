@@ -28,10 +28,8 @@ class AppTest < Test::Unit::TestCase
           @resize = '200x300!'
           get "/#{@resize}#{@image}"
         }
-        should "return ok" do
-          assert last_response.ok?
-        end
         should "return content type of image" do
+          assert last_response.ok?
           assert_equal 'image/jpeg', last_response.headers['Content-Type']
         end
         should "return properly resized image" do
