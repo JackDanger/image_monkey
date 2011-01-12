@@ -20,4 +20,19 @@ class ImageMonkeyTest < Test::Unit::TestCase
     end
   end
 
+  context "configuring" do
+    setup {
+      File.open(
+        File.expand_path(
+          File.join(File.dirname(__FILE__), '..', 'config.yml')
+        ), 'w'
+      ) {|f| f.write(<<-EOYAML) }
+host: static.example.com
+EOYAML
+    }
+    should "store host in configuration" do
+      assert_equal 'static.example.com', ImageMonkey.config['host']
+    end
+  end
+
 end
