@@ -17,4 +17,3 @@ You will want to use a http caching server (Varnish or Cloudfront (or both)) in 
  * If a request comes in that doesn't match /resizer, download/proxy the requested file (don't try to thumbnail it)..
  * Add a rails helper that you can use to easily integrate this into your Rails application.
  * Update to Sinatra 1.12.
- * Add an optional cache-busting parameter to the URL, like /resizer/some-hash-here-that-can-change-when-you-need-to-redownload/200x300/path/to/image.  If you want people to redownload an image (i.e. you added a watermark to the thumbnailing code), you'd update the hash to something different and clients would have to redownload it.
