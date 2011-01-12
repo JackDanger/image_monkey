@@ -13,14 +13,13 @@ module ImageMonkey
     end
 
     def thumbnail_path
-      @_path ||= "tmp/#{rand(100000000)}"
+      @_path ||= Tempfile.new('image_monkey').path
     end
 
     # Options: :size :path
     def initialize options={}
       file = open(SOURCE_HOST + options[:path])
 
-      FileUtils.mkdir_p("tmp")
       @img = Magick::Image.from_blob(file.read).first
       @img.change_geometry(options[:size]) { |cols, rows, image| image.crop_resized!(cols, rows) }
       @img = @img.sharpen(0.5, 0.5)
