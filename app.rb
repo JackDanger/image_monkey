@@ -1,8 +1,4 @@
 require 'sinatra'
-require 'open-uri'
-require 'RMagick'
-require 'ftools'
-require 'smusher'
 require 'image_monkey'
 
 get '/:geometry/:path' do

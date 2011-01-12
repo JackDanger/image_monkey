@@ -1,3 +1,8 @@
+require 'open-uri'
+require 'RMagick'
+require 'ftools'
+require 'smusher'
+
 module ImageMonkey
   SOURCE_HOST = "http://test.tanga.com/"
 
