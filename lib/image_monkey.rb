@@ -37,7 +37,7 @@ module ImageMonkey
 
     # Options: :size :path
     def initialize options={}
-      file = open('http://' + ImageMonkey.config['host'] + options[:path])
+      file = open('http://' + File.join(ImageMonkey.config['host'], options[:path]))
 
       @img = Magick::Image.from_blob(file.read).first
       @img.change_geometry(options[:size]) { |cols, rows, image| image.crop_resized!(cols, rows) }
