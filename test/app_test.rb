@@ -32,16 +32,17 @@ class AppTest < Test::Unit::TestCase
           assert last_response.ok?
         end
         should "cache for a long time" do
-          assert last_response.headers['Cache-Control'].split('=').last_to_i > 10000
+          assert last_response.headers['Cache-Control'].split('=').last.to_i > 10000
         end
         should "return content type of image" do
           assert_equal 'image/jpeg', last_response.headers['Content-Type']
         end
         should "return properly resized image" do
-          assert_equal File.read(ImageMonkey::Image.new(
+          monkey = ImageMonkey::Image.new(
                         :size => @resize,
                         :path => @image_path
-                      ).thumbnail_path),
+                      )
+          assert_equal File.read(monkey.thumbnail_path),
                       last_response.body
         end
       end
