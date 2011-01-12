@@ -4,6 +4,8 @@ GEM
     httpclient (2.1.6)
     json (1.4.6)
     rack (1.2.1)
+    rack-test (0.5.7)
+      rack (>= 1.0)
     rake (0.8.7)
     rmagick (2.13.1)
     shoulda (2.11.3)
@@ -20,6 +22,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rack-test (= 0.5.7)
   rmagick (= 2.13.1)
   shoulda (= 2.11.3)
   sinatra (= 1.1.0)
