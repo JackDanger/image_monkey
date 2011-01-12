@@ -14,8 +14,12 @@ module ImageMonkey
       @img.format
     end
 
+    def thumbnail
+      @_path ||= Tempfile.new('image_monkey')
+    end
+
     def thumbnail_path
-      @_path ||= Tempfile.new('image_monkey').path
+      thumbnail.path
     end
 
     # Options: :size :path
