@@ -31,6 +31,9 @@ class AppTest < Test::Unit::TestCase
         should "return ok" do
           assert last_response.ok?
         end
+        should "cache for a long time" do
+          assert last_response.headers['Cache-Control'].split('=').last_to_i > 10000
+        end
         should "return content type of image" do
           assert_equal 'image/jpeg', last_response.headers['Content-Type']
         end
