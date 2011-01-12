@@ -8,6 +8,10 @@ module ImageMonkey
   SOURCE_HOST = "http://test.tanga.com/"
 
   class Image
+    def missing?
+      @missing
+    end
+
     def content_type
       @img.format
     end
@@ -25,14 +29,22 @@ module ImageMonkey
       @img = @img.sharpen(0.5, 0.5)
       @img.write(thumbnail_path) { self.quality = 70 }
       Smusher.optimize_image(thumbnail_path)
+    rescue Errno::ENOENT
+      @missing = true
     end
   end
 
 end
 
-get '/*/*' do
-  size, path = params[:splat]
-  image = ImageMonkey::Image.new(:size => size,:path => path)
+get '/:geometry/:path' do
+
+  pass unless params[:geometry] =~ /^\d+x\d+[!%<>]$/
+
+  image = ImageMonkey::Image.new(:size => params[:geometry],
+                                 :path => params[:path])
+
+  pass if image.missing?
+
   expires      315360000, :public
   send_file    image.thumbnail_path, :type => image.content_type
 end

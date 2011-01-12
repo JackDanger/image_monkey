@@ -57,6 +57,29 @@ class ImageMonkeyTest < Test::Unit::TestCase
                       last_response.body
         end
       end
+      context "with bogus resize string" do
+        setup {
+          @resize = 'what-am-i-doing'
+          get "/#{@resize}#{@image}"
+        }
+        should "return 404" do
+          assert_equal 404, last_response.status
+        end
+      end
+    end
+    context "with url of missing image" do
+      setup {
+        @image = "/missing.png"
+      }
+      context "with imagemagick-qualified resize" do
+        setup {
+          @resize = '200x300!'
+          get "/#{@resize}#{@image}"
+        }
+        should "return 404" do
+          assert_equal 404, last_response.status
+        end
+      end
     end
   end
 end
